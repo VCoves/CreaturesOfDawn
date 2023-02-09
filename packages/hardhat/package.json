@@ -5,15 +5,21 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier -w . && prettier -w ./**/*.sol",
+    "lint": "eslint . && solhint ./contracts/**/*.sol",
     "precommit": "lint-staged"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@nomiclabs/hardhat-solhint": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
     "hardhat": "^2.12.6",
     "lint-staged": "^13.1.1",
     "prettier": "^2.8.4",
-    "prettier-plugin-solidity": "^1.1.2"
+    "prettier-plugin-solidity": "^1.1.2",
+    "solhint": "^3.3.8"
   }
 }
