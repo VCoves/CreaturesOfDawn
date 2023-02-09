@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check-types": "tsc --noemit",
+    "eslint": "eslint .",
+    "lint": "npm run eslint && npm run check-types",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@wagmi/core": "^0.8.16",
@@ -21,7 +25,9 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "autoprefixer": "^10.4.13",
+    "lint-staged": "^13.1.1",
     "postcss": "^8.4.21",
+    "prettier": "^2.8.4",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.3",
     "vite": "^4.0.0"

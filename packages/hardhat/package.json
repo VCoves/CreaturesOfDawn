@@ -4,12 +4,16 @@
   "description": "Hardhat project for CreaturesOfDawn",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier -w . && prettier -w ./**/*.sol",
+    "precommit": "lint-staged"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
-    "hardhat": "^2.12.6"
+    "hardhat": "^2.12.6",
+    "lint-staged": "^13.1.1",
+    "prettier": "^2.8.4",
+    "prettier-plugin-solidity": "^1.1.2"
   }
 }
