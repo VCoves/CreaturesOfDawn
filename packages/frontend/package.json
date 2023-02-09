@@ -10,7 +10,8 @@
     "check-types": "tsc --noemit",
     "eslint": "eslint src",
     "lint": "npm run eslint && npm run check-types",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "format": "prettier -w ."
   },
   "dependencies": {
     "@wagmi/core": "^0.8.16",

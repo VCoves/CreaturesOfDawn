@@ -9,6 +9,9 @@
     "lerna": "^6.4.1"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "npx lerna run format --concurrency=10 --parallel --stream",
+    "lint": "lerna run lint --concurrency=10 --parallel --stream",
+    "test": "lerna run test --concurrency=10 --parallel --stream"
   }
 }
