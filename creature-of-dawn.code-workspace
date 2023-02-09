@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "creature-of-dawn",
+      "path": "."
+    },
+    {
+      "name": "frontend",
+      "path": "./packages/frontend"
+    },
+    {
+      "name": "hardhat",
+      "path": "./packages/hardhat"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules/**": true,
+      "packages/*/*": true
+    }
+  }
+}
