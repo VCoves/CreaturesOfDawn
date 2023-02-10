@@ -28,11 +28,11 @@ export default function App() {
   return (
     <div>
       {navbar()}
-      <div className="navbar" style={{ color: 'white', width: '98.85vw', alignItems: 'center', justifyContent: 'center', background: 'grey' }}>
+      <div className="bg-gray-600 justify-center py-3 text-xl text-gray-300 text-bold text-center font-semibold" >
         <h1>TOP COLLECTIONS</h1>
       </div>
       {carousel(nft())}
-      <div className="navbar" style={{ color: 'white', width: '98.85vw', alignItems: 'center', justifyContent: 'center', background: 'grey' }}>
+      <div className="bg-gray-600 justify-center py-3 text-xl text-gray-300 text-bold text-center font-semibold" >
         <h1>YOUR NFTS</h1>
       </div>
       <div className="nft-container" >
