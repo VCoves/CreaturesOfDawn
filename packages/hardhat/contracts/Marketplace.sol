@@ -12,32 +12,8 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-interface IFantomAddressRegistry {
-    function artion() external view returns (address);
-
-    function bundleMarketplace() external view returns (address);
-
-    function auction() external view returns (address);
-
-    function factory() external view returns (address);
-
-    function privateFactory() external view returns (address);
-
-    function artFactory() external view returns (address);
-
-    function privateArtFactory() external view returns (address);
-
-    function tokenRegistry() external view returns (address);
-
-    function priceFeed() external view returns (address);
-}
-
-interface IFantomAuction {
-    function auctions(
-        address,
-        uint256
-    ) external view returns (address, address, uint256, uint256, uint256, bool);
-}
+import "./interfaces/IAddressRegistry.sol";
+import "./interfaces/IAuction.sol";
 
 interface IFantomBundleMarketplace {
     function validateItemSold(address, uint256, uint256) external;
@@ -240,13 +216,15 @@ contract FantomMarketplace is OwnableUpgradeable, ReentrancyGuard {
         __Ownable_init();
     }
 
-    /// @notice Method for listing NFT
-    /// @param _nftAddress Address of NFT contract
-    /// @param _tokenId Token ID of NFT
-    /// @param _quantity token amount to list (needed for ERC-1155 NFTs, set as 1 for ERC-721)
-    /// @param _payToken Paying token
-    /// @param _pricePerItem sale price for each iteam
-    /// @param _startingTime scheduling for a future sale
+    /**
+     * @notice Method for listing NFT
+     * @param _nftAddress Address of NFT contract
+     * @param _tokenId Token ID of NFT
+     * @param _quantity token amount to list (needed for ERC-1155 NFTs, set as 1 for ERC-721)
+     * @param _payToken Paying token
+     * @param _pricePerItem sale price for each item
+     * @param _startingTime scheduling for a future sale
+     */
     function listItem(
         address _nftAddress,
         uint256 _tokenId,
