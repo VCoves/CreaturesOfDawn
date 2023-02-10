@@ -10,27 +10,8 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-interface IFantomAddressRegistry {
-    function artion() external view returns (address);
-
-    function marketplace() external view returns (address);
-
-    function bundleMarketplace() external view returns (address);
-
-    function tokenRegistry() external view returns (address);
-}
-
-interface IFantomMarketplace {
-    function minters(address, uint256) external view returns (address);
-
-    function royalties(address, uint256) external view returns (uint16);
-
-    function collectionRoyalties(
-        address
-    ) external view returns (uint16, address, address);
-
-    function getPrice(address) external view returns (int256);
-}
+import "./interfaces/IAddressRegistry.sol";
+import "./interfaces/IMarketplace.sol";
 
 interface IFantomBundleMarketplace {
     function validateItemSold(address, uint256, uint256) external;

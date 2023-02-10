@@ -20,4 +20,6 @@ interface IFantomAddressRegistry {
     function tokenRegistry() external view returns (address);
 
     function priceFeed() external view returns (address);
+
+    function marketplace() external view returns (address);
 }
