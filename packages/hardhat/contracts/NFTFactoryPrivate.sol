@@ -3,9 +3,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./NFTTradable.sol";
+import "./NFTTradablePrivate.sol";
 
-contract NFTFactory is Ownable {
+contract NFTFactoryPrivate is Ownable {
     /// @dev Events of the contract
     event ContractCreated(address creator, address nft);
     event ContractDisabled(address caller, address nft);
@@ -113,26 +113,21 @@ contract NFTFactory is Ownable {
     /// @param _symbol Symbol of NFT contract
     function createNFTContract(
         string memory _name,
-        string memory _symbol,
-        bool _isPrivate,
-        address _tradableManager
+        string memory _symbol
     ) external payable returns (address) {
         require(msg.value >= platformFee, "Insufficient funds.");
         (bool success, ) = feeRecipient.call{value: msg.value}("");
         require(success, "Transfer failed");
 
-        NFTTradable nft = new NFTTradable(
+        NFTTradablePrivate nft = new NFTTradablePrivate(
             _name,
             _symbol,
             auction,
             marketplace,
             bundleMarketplace,
             mintFee,
-            feeRecipient,
-            _isPrivate,
-            _tradableManager
+            feeRecipient
         );
-
         exists[address(nft)] = true;
         nft.transferOwnership(_msgSender());
         emit ContractCreated(_msgSender(), address(nft));

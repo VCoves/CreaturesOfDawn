@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -18,7 +18,7 @@ interface IOracle {
     function latestAnswer() external view returns (int256);
 }
 
-contract FantomPriceFeed is Ownable {
+contract PriceFeed is Ownable {
     /// @notice keeps track of oracles for each tokens
     mapping(address => address) public oracles;
 

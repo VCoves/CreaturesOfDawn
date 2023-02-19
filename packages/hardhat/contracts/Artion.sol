@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./library/ERC2981PerTokenRoyalties.sol";
 
-contract Artion is ERC721URIStorage, Ownable {
+contract Artion is ERC721URIStorage, ERC2981PerTokenRoyalties, Ownable {
     using SafeMath for uint256;
 
     /// @dev Events of the contract
@@ -208,7 +208,13 @@ contract Artion is ERC721URIStorage, Ownable {
     /// @inheritdoc	ERC165
     function supportsInterface(
         bytes4 interfaceId
-    ) public view virtual override(ERC721, ERC2981) returns (bool) {
+    )
+        public
+        view
+        virtual
+        override(ERC721, ERC2981PerTokenRoyalties)
+        returns (bool)
+    {
         return super.supportsInterface(interfaceId);
     }
 }

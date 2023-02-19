@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ArtTradable.sol";
 
-contract FantomArtFactory is Ownable {
+contract ArtFactory is Ownable {
     /// @dev Events of the contract
     event ContractCreated(address creator, address nft);
     event ContractDisabled(address caller, address nft);
@@ -37,7 +37,7 @@ contract FantomArtFactory is Ownable {
         uint256 _mintFee,
         address payable _feeRecipient,
         uint256 _platformFee
-    ) public {
+    ) {
         marketplace = _marketplace;
         bundleMarketplace = _bundleMarketplace;
         mintFee = _mintFee;
@@ -105,7 +105,7 @@ contract FantomArtFactory is Ownable {
         (bool success, ) = feeRecipient.call{value: msg.value}("");
         require(success, "Transfer failed");
 
-        FantomArtTradable nft = new FantomArtTradable(
+        ArtTradable nft = new ArtTradable(
             _name,
             _symbol,
             mintFee,

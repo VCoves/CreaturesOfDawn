@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./IERC165.sol";
-import "./IERC1155TokenReceiver.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/interfaces/IERC165.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 
 /**
  * @dev Implementation of Multi-Token Standard contract
@@ -147,7 +147,7 @@ contract ERC1155 is IERC165 {
     ) internal {
         // Check if recipient is contract
         if (_to.isContract()) {
-            bytes4 retval = IERC1155TokenReceiver(_to).onERC1155Received(
+            bytes4 retval = IERC1155Receiver(_to).onERC1155Received(
                 msg.sender,
                 _from,
                 _id,
@@ -207,7 +207,7 @@ contract ERC1155 is IERC165 {
     ) internal {
         // Pass data if recipient is contract
         if (_to.isContract()) {
-            bytes4 retval = IERC1155TokenReceiver(_to).onERC1155BatchReceived(
+            bytes4 retval = IERC1155Receiver(_to).onERC1155BatchReceived(
                 msg.sender,
                 _from,
                 _ids,

@@ -15,14 +15,18 @@ contract ProxyRegistry {
 }
 
 /**
- * @title FantomArtTradable
- * FantomArtTradable - ERC1155 contract that whitelists an operator address, 
+ * @title FantomArtTradablePrivate
+ * FantomArtTradablePrivate - ERC1155 contract that whitelists an operator address, 
  * has mint functionality, and supports useful standards from OpenZeppelin,
   like _exists(), name(), symbol(), and totalSupply()
  */
-contract ArtTradable is ERC1155, ERC1155MintBurn, ERC1155Metadata, Ownable {
+contract ArtTradablePrivate is
+    ERC1155,
+    ERC1155MintBurn,
+    ERC1155Metadata,
+    Ownable
+{
     using SafeMath for uint256;
-
     uint256 private _currentTokenID = 0;
 
     // Optional mapping for token URIs
@@ -84,7 +88,7 @@ contract ArtTradable is ERC1155, ERC1155MintBurn, ERC1155Metadata, Ownable {
         address _to,
         uint256 _supply,
         string calldata _uri
-    ) external payable {
+    ) external payable onlyOwner {
         require(msg.value >= platformFee, "Insufficient funds to mint.");
 
         uint256 _id = _getNextTokenID();

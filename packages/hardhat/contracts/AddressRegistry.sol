@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract FantomAddressRegistry is Ownable {
+contract AddressRegistry is Ownable {
     bytes4 private constant INTERFACE_ID_ERC721 = 0x80ac58cd;
 
     /// @notice Artion contract
@@ -37,6 +37,9 @@ contract FantomAddressRegistry is Ownable {
 
     /// @notice FantomPriceFeed contract
     address public priceFeed;
+
+    /// @notice FantomRoyaltyRegistry contract
+    address public royaltyRegistry;
 
     /**
      @notice Update artion contract
@@ -126,5 +129,15 @@ contract FantomAddressRegistry is Ownable {
      */
     function updatePriceFeed(address _priceFeed) external onlyOwner {
         priceFeed = _priceFeed;
+    }
+
+    /**
+     @notice Update royalty registry contract
+     @dev Only admin
+     */
+    function updateRoyaltyRegistry(
+        address _royaltyRegistry
+    ) external onlyOwner {
+        royaltyRegistry = _royaltyRegistry;
     }
 }
