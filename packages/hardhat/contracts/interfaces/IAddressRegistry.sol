@@ -2,7 +2,9 @@
 
 pragma solidity 0.8.17;
 
-interface IFantomAddressRegistry {
+interface IAddressRegistry {
+    function marketplace() external view returns (address);
+
     function artion() external view returns (address);
 
     function bundleMarketplace() external view returns (address);
@@ -21,5 +23,5 @@ interface IFantomAddressRegistry {
 
     function priceFeed() external view returns (address);
 
-    function marketplace() external view returns (address);
+    function royaltyRegistry() external view returns (address);
 }

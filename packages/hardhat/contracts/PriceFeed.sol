@@ -4,9 +4,7 @@ pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-interface IFantomAddressRegistry {
-    function tokenRegistry() external view returns (address);
-}
+import "./interfaces/IAddressRegistry.sol";
 
 interface IFantomTokenRegistry {
     function enabled(address) external returns (bool);
@@ -44,7 +42,7 @@ contract PriceFeed is Ownable {
         address _oracle
     ) external onlyOwner {
         IFantomTokenRegistry tokenRegistry = IFantomTokenRegistry(
-            IFantomAddressRegistry(addressRegistry).tokenRegistry()
+            IAddressRegistry(addressRegistry).tokenRegistry()
         );
         require(tokenRegistry.enabled(_token), "invalid token");
         require(oracles[_token] == address(0), "oracle already set");

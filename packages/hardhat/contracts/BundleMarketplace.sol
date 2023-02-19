@@ -13,13 +13,7 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 
-interface IFantomAddressRegistry {
-    function auction() external view returns (address);
-
-    function marketplace() external view returns (address);
-
-    function tokenRegistry() external view returns (address);
-}
+import "./interfaces/IAddressRegistry.sol";
 
 interface IFantomMarketplace {
     function validateItemSold(address, uint256, address, address) external;
@@ -116,7 +110,7 @@ contract BundleMarketplace is OwnableUpgradeable, ReentrancyGuardUpgradeable {
     address payable public feeReceipient;
 
     /// @notice Address registry
-    IFantomAddressRegistry public addressRegistry;
+    IAddressRegistry public addressRegistry;
 
     modifier onlyContract() {
         require(
@@ -554,7 +548,7 @@ contract BundleMarketplace is OwnableUpgradeable, ReentrancyGuardUpgradeable {
      @dev Only admin
      */
     function updateAddressRegistry(address _registry) external onlyOwner {
-        addressRegistry = IFantomAddressRegistry(_registry);
+        addressRegistry = IAddressRegistry(_registry);
     }
 
     /**
