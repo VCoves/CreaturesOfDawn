@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity ^0.8.0;
 
 import "./IERC165.sol";
 import "./IERC1155TokenReceiver.sol";
@@ -47,7 +47,6 @@ contract ERC1155 is IERC165 {
         address indexed _operator,
         bool _approved
     );
-    event URI(string _uri, uint256 indexed _id);
 
     /***********************************|
   |     Public Transfer Functions     |
@@ -297,12 +296,12 @@ contract ERC1155 is IERC165 {
   |          ERC165 Functions         |
   |__________________________________*/
 
-    /**
+    /*
      * INTERFACE_SIGNATURE_ERC165 = bytes4(keccak256("supportsInterface(bytes4)"));
      */
     bytes4 private constant INTERFACE_SIGNATURE_ERC165 = 0x01ffc9a7;
 
-    /**
+    /*
      * INTERFACE_SIGNATURE_ERC1155 =
      * bytes4(keccak256("safeTransferFrom(address,address,uint256,uint256,bytes)")) ^
      * bytes4(keccak256("safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)")) ^
@@ -320,7 +319,7 @@ contract ERC1155 is IERC165 {
      */
     function supportsInterface(
         bytes4 _interfaceID
-    ) external view override returns (bool) {
+    ) external pure override returns (bool) {
         if (
             _interfaceID == INTERFACE_SIGNATURE_ERC165 ||
             _interfaceID == INTERFACE_SIGNATURE_ERC1155

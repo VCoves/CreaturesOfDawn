@@ -1,114 +1,58 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity 0.8.17;
+pragma solidity ^0.8.0;
 
 /**
- * @notice Contract that handles metadata related methods.
- * @dev Methods assume a deterministic generation of URI based on token IDs.
- *      Methods also assume that URI uses hex representation of token IDs.
+ * @dev ERC-1155 interface for accepting safe transfers.
  */
-contract ERC1155Metadata {
-    // URI's default URI prefix
-    string internal baseMetadataURI;
-    event URI(string _uri, uint256 indexed _id);
-
-    /***********************************|
-  |     Metadata Public Function s    |
-  |__________________________________*/
+interface IERC1155TokenReceiver {
+    /**
+     * @notice Handle the receipt of a single ERC1155 token type
+     * @dev An ERC1155-compliant smart contract MUST call this function on the token recipient contract, at the end of a `safeTransferFrom` after the balance has been updated
+     * This function MAY throw to revert and reject the transfer
+     * Return of other amount than the magic value MUST result in the transaction being reverted
+     * Note: The token contract address is always the message sender
+     * @param _operator  The address which called the `safeTransferFrom` function
+     * @param _from      The address which previously owned the token
+     * @param _id        The id of the token being transferred
+     * @param _amount    The amount of tokens being transferred
+     * @param _data      Additional data with no specified format
+     * @return           `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
+     */
+    function onERC1155Received(
+        address _operator,
+        address _from,
+        uint256 _id,
+        uint256 _amount,
+        bytes calldata _data
+    ) external returns (bytes4);
 
     /**
-     * @notice A distinct Uniform Resource Identifier (URI) for a given token.
-     * @dev URIs are defined in RFC 3986.
-     *      URIs are assumed to be deterministically generated based on token ID
-     *      Token IDs are assumed to be represented in their hex format in URIs
-     * @return URI string
+     * @notice Handle the receipt of multiple ERC1155 token types
+     * @dev An ERC1155-compliant smart contract MUST call this function on the token recipient contract, at the end of a `safeBatchTransferFrom` after the balances have been updated
+     * This function MAY throw to revert and reject the transfer
+     * Return of other amount than the magic value WILL result in the transaction being reverted
+     * Note: The token contract address is always the message sender
+     * @param _operator  The address which called the `safeBatchTransferFrom` function
+     * @param _from      The address which previously owned the token
+     * @param _ids       An array containing ids of each token being transferred
+     * @param _amounts   An array containing amounts of each token being transferred
+     * @param _data      Additional data with no specified format
+     * @return           `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
      */
-    function uri(uint256 _id) public view virtual returns (string memory) {
-        return
-            string(abi.encodePacked(baseMetadataURI, _uint2str(_id), ".json"));
-    }
-
-    /***********************************|
-  |    Metadata Internal Functions    |
-  |__________________________________*/
+    function onERC1155BatchReceived(
+        address _operator,
+        address _from,
+        uint256[] calldata _ids,
+        uint256[] calldata _amounts,
+        bytes calldata _data
+    ) external returns (bytes4);
 
     /**
-     * @notice Will emit default URI log event for corresponding token _id
-     * @param _tokenIDs Array of IDs of tokens to log default URI
+     * @notice Indicates whether a contract implements the `ERC1155TokenReceiver` functions and so can accept ERC1155 token types.
+     * @param  interfaceID The ERC-165 interface ID that is queried for support.s
+     * @dev This function MUST return true if it implements the ERC1155TokenReceiver interface and ERC-165 interface.
+     *      This function MUST NOT consume more than 5,000 gas.
+     * @return Wheter ERC-165 or ERC1155TokenReceiver interfaces are supported.
      */
-    function _logURIs(uint256[] memory _tokenIDs) internal {
-        string memory baseURL = baseMetadataURI;
-        string memory tokenURI;
-
-        for (uint256 i = 0; i < _tokenIDs.length; i++) {
-            tokenURI = string(
-                abi.encodePacked(baseURL, _uint2str(_tokenIDs[i]), ".json")
-            );
-            emit URI(tokenURI, _tokenIDs[i]);
-        }
-    }
-
-    /**
-     * @notice Will emit a specific URI log event for corresponding token
-     * @param _tokenIDs IDs of the token corresponding to the _uris logged
-     * @param _URIs    The URIs of the specified _tokenIDs
-     */
-    function _logURIs(
-        uint256[] memory _tokenIDs,
-        string[] memory _URIs
-    ) internal {
-        require(
-            _tokenIDs.length == _URIs.length,
-            "ERC1155Metadata#_logURIs: INVALID_ARRAYS_LENGTH"
-        );
-        for (uint256 i = 0; i < _tokenIDs.length; i++) {
-            emit URI(_URIs[i], _tokenIDs[i]);
-        }
-    }
-
-    /**
-     * @notice Will update the base URL of token's URI
-     * @param _newBaseMetadataURI New base URL of token's URI
-     */
-    function _setBaseMetadataURI(string memory _newBaseMetadataURI) internal {
-        baseMetadataURI = _newBaseMetadataURI;
-    }
-
-    /***********************************|
-  |    Utility Internal Functions     |
-  |__________________________________*/
-
-    /**
-     * @notice Convert uint256 to string
-     * @param _i Unsigned integer to convert to string
-     */
-    function _uint2str(
-        uint256 _i
-    ) internal pure returns (string memory _uintAsString) {
-        if (_i == 0) {
-            return "0";
-        }
-
-        uint256 j = _i;
-        uint256 ii = _i;
-        uint256 len;
-
-        // Get number of bytes
-        while (j != 0) {
-            len++;
-            j /= 10;
-        }
-
-        bytes memory bstr = new bytes(len);
-        uint256 k = len - 1;
-
-        // Get each individual ASCII
-        while (ii != 0) {
-            bstr[k--] = bytes1(uint8(48 + (ii % 10)));
-            ii /= 10;
-        }
-
-        // Convert to string
-        return string(bstr);
-    }
+    function supportsInterface(bytes4 interfaceID) external view returns (bool);
 }
